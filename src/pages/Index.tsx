@@ -1,43 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  BarChart3, 
-  Calendar, 
-  ChefHat, 
-  ClipboardList, 
-  Coffee,
-  DollarSign, 
-  Pizza,
-  Settings, 
+import MenuView from "@/components/menu/MenuView";
+import {
+  BarChart3,
+  Calendar,
+  ClipboardList,
+  ChefHat,
+  DollarSign,
+  Settings,
   ShoppingBag,
-  Utensils, 
-  Users 
+  Users,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 
 const Index = () => {
-  const menuItems = [
-    {
-      category: "Main Courses",
-      items: [
-        { name: "Grilled Salmon", price: 24.99, description: "Fresh Atlantic salmon with herbs", icon: <Utensils className="h-5 w-5" />, tags: ["Seafood", "Healthy"] },
-        { name: "Classic Burger", price: 16.99, description: "Angus beef with premium toppings", icon: <Utensils className="h-5 w-5" />, tags: ["Popular"] },
-        { name: "Margherita Pizza", price: 18.99, description: "Fresh mozzarella and basil", icon: <Pizza className="h-5 w-5" />, tags: ["Vegetarian"] },
-      ]
-    },
-    {
-      category: "Beverages",
-      items: [
-        { name: "Artisan Coffee", price: 4.99, description: "House-roasted beans", icon: <Coffee className="h-5 w-5" />, tags: ["Hot"] },
-        { name: "Fresh Juice", price: 5.99, description: "Seasonal fruit selection", icon: <Coffee className="h-5 w-5" />, tags: ["Healthy"] },
-      ]
-    }
-  ];
+  // Simulating admin status - will be replaced with actual auth
+  const isAdmin = true;
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold">DineFlow Manager</h1>
@@ -47,7 +28,6 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="container mx-auto px-4 py-6">
         <Tabs defaultValue="dashboard" className="space-y-4">
           <TabsList>
@@ -58,7 +38,6 @@ const Index = () => {
           </TabsList>
 
           <TabsContent value="dashboard" className="space-y-4">
-            {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -105,7 +84,6 @@ const Index = () => {
               </Card>
             </div>
 
-            {/* Quick Actions */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Button className="h-24 flex flex-col gap-2">
                 <ClipboardList className="h-6 w-6" />
@@ -137,54 +115,8 @@ const Index = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="menu" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Menu Management</h2>
-              <Button>
-                <ChefHat className="mr-2 h-4 w-4" />
-                Add New Item
-              </Button>
-            </div>
-
-            <div className="grid gap-6">
-              {menuItems.map((category, idx) => (
-                <Card key={idx} className="overflow-hidden">
-                  <CardHeader className="bg-muted/50">
-                    <CardTitle>{category.category}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
-                    <div className="divide-y">
-                      {category.items.map((item, itemIdx) => (
-                        <div key={itemIdx} className="p-4 hover:bg-muted/50 transition-colors">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-start space-x-4">
-                              <div className="p-2 bg-primary/10 rounded-lg">
-                                {item.icon}
-                              </div>
-                              <div>
-                                <h3 className="font-medium">{item.name}</h3>
-                                <p className="text-sm text-muted-foreground">{item.description}</p>
-                                <div className="flex gap-2 mt-2">
-                                  {item.tags.map((tag, tagIdx) => (
-                                    <Badge key={tagIdx} variant="secondary" className="text-xs">
-                                      {tag}
-                                    </Badge>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-4">
-                              <span className="font-semibold">${item.price}</span>
-                              <Button variant="ghost" size="sm">Edit</Button>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+          <TabsContent value="menu">
+            <MenuView isAdmin={isAdmin} />
           </TabsContent>
 
           <TabsContent value="reservations">
